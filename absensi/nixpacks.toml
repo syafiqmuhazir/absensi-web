@@ -1,5 +1,27 @@
+# File: nixpacks.toml
+
 [phases.setup]
-nixPkgs = ["php83", "php83-extensions.gd", "php83-extensions.fileinfo", "php83-extensions.pdo", "php83-extensions.pdo_mysql"]
+nixPkgs = [
+    "php83",
+    "php83-extensions.gd",
+    "php83-extensions.zip",
+    "php83-extensions.xml",
+    "php83-extensions.fileinfo",
+    "php83-extensions.pdo",
+    "php83-extensions.pdo_mysql",
+    "nodejs",
+    "npm"
+]
 
 [phases.build]
-cmds = ["composer install --optimize-autoloader --no-dev --no-interaction --ignore-platform-reqs"]
+cmds = [
+    "npm install",
+    "npm run build",
+    "composer install --optimize-autoloader --no-dev --no-interaction --ignore-platform-reqs",
+    "php artisan config:cache",
+    "php artisan route:cache",
+    "php artisan view:cache"
+]
+
+[start]
+cmd = "php artisan serve --host=0.0.0.0 --port=$PORT"
