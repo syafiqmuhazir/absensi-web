@@ -1,0 +1,5 @@
+[phases.setup]
+nixPkgs = ["php82", "php82-extensions.gd", "php82-extensions.fileinfo", "php82-extensions.pdo", "php82-extensions.pdo_mysql"]
+
+[phases.build]
+cmds = ["composer install --optimize-autoloader --no-dev --no-interaction --ignore-platform-reqs"]
