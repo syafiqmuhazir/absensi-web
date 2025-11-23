@@ -123,10 +123,21 @@ class SiswaController extends Controller
     public function destroy(Siswa $siswa)
     {
         try {
+
+            // 1. HAPUS DATA TERKAIT DULU (PENTING!)
+            // Hapus semua absensi milik siswa ini agar tidak error Foreign Key
+            $siswa->absensis()->delete(); 
+
+            // 2. BARU HAPUS SISWANYA
             $siswa->delete();
-            return response()->json(['message' => 'Siswa berhasil dihapus']);
+
+            return response()->json(['message' => 'Siswa berhasil dihapus'], 200);
+
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Gagal menghapus siswa, mungkin terkait data absensi'], 500);
+            return response()->json([
+                'message' => 'Gagal menghapus siswa',
+                'error' => $e->getMessage()
+            ], 500);
         }
     }
 }

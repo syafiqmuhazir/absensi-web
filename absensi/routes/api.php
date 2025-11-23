@@ -3,10 +3,10 @@
 use App\Http\Controllers\Api\AbsensiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\GuruController;
 use App\Http\Controllers\Api\JurnalSesiController;
-use App\Http\Controllers\API\KelasController;
+use App\Http\Controllers\Api\KelasController;
 use App\Http\Controllers\Api\LaporanController;
 use App\Http\Controllers\Api\MataPelajaranController;
 use App\Http\Controllers\Api\SiswaController;
@@ -23,6 +23,14 @@ use App\Models\User;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::get('/login', function () {
+    return response()->json([
+        'status' => 'error',
+        'message' => 'Anda belum login (Unauthorized). Silakan login untuk mendapatkan token.'
+    ], 401);
+})->name('login'); // <--- PENTING: Harus ada name('login')
+
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group(function () {
